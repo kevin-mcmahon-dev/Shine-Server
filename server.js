@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 // middleware - API routes
-app.use('/api/shine', routes.routes);
+app.use('/api/v1', routes.routes);
 
 // listen
 app.listen(port, () => console.log(`Server is running on port ${port}`));
