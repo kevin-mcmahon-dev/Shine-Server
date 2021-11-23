@@ -1,13 +1,17 @@
 const db = require('../models');
 
-const index = (req, res) => {
-    db.Conversation.find({}, (err, foundConversations, foundMessages) => {
+const conversationIndex = (req, res) => {
+    db.Conversation.find({}, (err, foundConversations) => {
         if (err) console.log('Error in games#index:', err)
 
-        if(!foundConversations || !foundMessages) return res.json({
-            message: 'No Conversations or Messages found in database.'
+        if(!foundConversations) return res.json({
+            message: 'No Conversations found in database.'
         })
 
-        res.status(200).json({ games: foundGames });
+        res.status(200).json({ converations: foundConversations});
     })
 }
+
+module.exports = {
+    conversationIndex,
+};
