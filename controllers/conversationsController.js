@@ -12,6 +12,19 @@ const conversationIndex = (req, res) => {
     })
 }
 
+const conversationShow = (req, res) => {
+    db.Conversation.findById(req.params.id, (err, foundConversation) => {
+        if (err) console.log('Error in conversation show:', err)
+
+        if(!foundConversation) return res.json({
+            message: 'No Conversation found in database.'
+        })
+
+        res.status(200).json({ conversation: foundConversation});
+    })
+}
+
 module.exports = {
     conversationIndex,
+    conversationShow,
 };
