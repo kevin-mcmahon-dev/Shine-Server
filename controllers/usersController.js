@@ -2,25 +2,6 @@ const express = require('express');
 // const { Conversation } = require('../models');
 const db = require('../models');
 
-// Account Page
-// router.get("/:id", async function (req, res) {
-//     try {
-//         const user = await db.User.findById(req.params.id);
-//         const conversations = await db.Conversation.find({user: req.params.id}).populate("user");
-        
-//         const conversation_list = [];
-//         const test = [];
-//         const connection_list = [];
-
-//         for (let i = 0; i <= conversations.length - 1; i++) {
-//             conversation_list[i] = conversations[i].user;
-//             test[i] =  await Conversation.find({user: conversation_list[i]}).population("user");
-//         }
-//     } catch (error) {
-//         return console.log(error);
-//     }
-// })
-
 // Account Index will be used for search functionality
 const accountIndex = (req, res) => {
     db.User.find({}, (err, foundUsers) => {
