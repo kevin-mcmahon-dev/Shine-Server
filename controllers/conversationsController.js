@@ -1,5 +1,13 @@
 const db = require('../models');
 
+//User Routing
+
+    //Create Route
+
+    //Update Route --> Change avatar, add to conversations array, add to connections array
+
+
+
 const conversationIndex = (req, res) => {
     db.Conversation.find({}, (err, foundConversations) => {
         if (err) console.log('Error in conversation index:', err)
@@ -26,15 +34,32 @@ const conversationShow = (req, res) => {
 
 //Conversation Create
 
-const createConversation = (req, res) => {
-    db.Conversatioon.create(req.body, (err, savedConversation) => {
-        if (err) console.log('Error in conversation#create:', err)
+// const createConversation = (req, res) => {
+//     db.Conversatioon.create(req.body, (err, savedConversation) => {
+//         if (err) console.log('Error in conversation#create:', err)
 
-        // Validations and error handling here
+//         // Validations and error handling here
 
-        res.status(201).json({ conversation: savedConversation })
-    })
-}
+//         res.status(201).json({ conversation: savedConversation })
+//     })
+// }
+
+//Conversation Delete
+
+// const deleteConversation = (req, res) => {
+//     db.Conversation.findByIdAndDelete(req.params.id, (err, deletedConversation) => {
+//         if (err) {
+//             console.log('Error in conversation#destroy:', err) 
+//             return res.send("Incomplete conversation#destroy controller function");
+//         }
+    
+//         res.status(200).json(
+//             {
+//                 deletedConversation
+//             }
+//         );
+//     });
+// }
 
 // /conversations/:id
 // This will find the conversation and find all messages that have that conversations id
@@ -101,23 +126,6 @@ const createConversation = (req, res) => {
 //         res.status(200).json(
 //             {
 //                 deletedMessage
-//             }
-//         );
-//     });
-// }
-
-//Conversation Delete
-
-// const deleteConversation = (req, res) => {
-//     db.Conversation.findByIdAndDelete(req.params.id, (err, deletedConversation) => {
-//         if (err) {
-//             console.log('Error in conversation#destroy:', err) 
-//             return res.send("Incomplete conversation#destroy controller function");
-//         }
-    
-//         res.status(200).json(
-//             {
-//                 deletedConversation
 //             }
 //         );
 //     });

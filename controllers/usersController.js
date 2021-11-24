@@ -20,6 +20,20 @@ const db = require('../models');
 //         return console.log(error);
 //     }
 // })
+
+// Account Index will be used for search functionality
+const accountIndex = (req, res) => {
+    db.User.find({}, (err, foundUsers) => {
+        if (err) console.log('Error in user index:', err)
+
+        if(!foundUsers) return res.json({
+            message: 'No Users found in database.'
+        })
+
+        res.status(200).json({ users: foundUsers});
+    })
+}
+
 const accountShow = (req, res) => {
     db.User.findById(req.params.id, (err, foundUser) => {
         if (err) {
