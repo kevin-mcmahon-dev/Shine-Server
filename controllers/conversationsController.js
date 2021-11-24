@@ -71,13 +71,28 @@ const conversationShow = (req, res) => {
 const deleteMessage = (req, res) => {
     db.Message.findByIdAndDelete(req.params.id, (err, deletedMessage) => {
         if (err) {
-            console.log('Error in messagve#destroy:', err) 
+            console.log('Error in message#destroy:', err) 
             return res.send("Incomplete message#destroy controller function");
         }
     
         res.status(200).json(
             {
                 deletedMessage
+            }
+        );
+    });
+}
+
+const deleteConversation = (req, res) => {
+    db.Conversation.findByIdAndDelete(req.params.id, (err, deletedConversation) => {
+        if (err) {
+            console.log('Error in conversation#destroy:', err) 
+            return res.send("Incomplete conversation#destroy controller function");
+        }
+    
+        res.status(200).json(
+            {
+                deletedConversation
             }
         );
     });
