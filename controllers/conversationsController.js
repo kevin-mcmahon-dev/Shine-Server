@@ -51,6 +51,17 @@ const conversationShow = (req, res) => {
 //     })
 // }
 
+// Message Create Route
+const createMessage = (req, res) => {
+    db.Message.create(req.body, (err, savedMessage) => {
+        if (err) console.log('Error in message#create:', err)
+
+        // Validations and error handling here
+
+        res.status(201).json({ message: savedMessage })
+    })
+}
+
 // Message update route
 
 // const messageUpdate = (req, res) => {
@@ -68,35 +79,38 @@ const conversationShow = (req, res) => {
 // }
 
 //Message delete route
-const deleteMessage = (req, res) => {
-    db.Message.findByIdAndDelete(req.params.id, (err, deletedMessage) => {
-        if (err) {
-            console.log('Error in message#destroy:', err) 
-            return res.send("Incomplete message#destroy controller function");
-        }
-    
-        res.status(200).json(
-            {
-                deletedMessage
-            }
-        );
-    });
-}
 
-const deleteConversation = (req, res) => {
-    db.Conversation.findByIdAndDelete(req.params.id, (err, deletedConversation) => {
-        if (err) {
-            console.log('Error in conversation#destroy:', err) 
-            return res.send("Incomplete conversation#destroy controller function");
-        }
+// const deleteMessage = (req, res) => {
+//     db.Message.findByIdAndDelete(req.params.id, (err, deletedMessage) => {
+//         if (err) {
+//             console.log('Error in message#destroy:', err) 
+//             return res.send("Incomplete message#destroy controller function");
+//         }
     
-        res.status(200).json(
-            {
-                deletedConversation
-            }
-        );
-    });
-}
+//         res.status(200).json(
+//             {
+//                 deletedMessage
+//             }
+//         );
+//     });
+// }
+
+//Conversation Delete
+
+// const deleteConversation = (req, res) => {
+//     db.Conversation.findByIdAndDelete(req.params.id, (err, deletedConversation) => {
+//         if (err) {
+//             console.log('Error in conversation#destroy:', err) 
+//             return res.send("Incomplete conversation#destroy controller function");
+//         }
+    
+//         res.status(200).json(
+//             {
+//                 deletedConversation
+//             }
+//         );
+//     });
+// }
 
 module.exports = {
     conversationIndex,
