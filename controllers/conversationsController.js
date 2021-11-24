@@ -24,6 +24,17 @@ const conversationShow = (req, res) => {
     })
 }
 
+//Conversation Create
+
+const createConversation = (req, res) => {
+    db.Conversatioon.create(req.body, (err, savedConversation) => {
+        if (err) console.log('Error in conversation#create:', err)
+
+        // Validations and error handling here
+
+        res.status(201).json({ conversation: savedConversation })
+    })
+}
 
 // /conversations/:id
 // This will find the conversation and find all messages that have that conversations id
@@ -52,15 +63,15 @@ const conversationShow = (req, res) => {
 // }
 
 // Message Create Route
-const createMessage = (req, res) => {
-    db.Message.create(req.body, (err, savedMessage) => {
-        if (err) console.log('Error in message#create:', err)
+// const createMessage = (req, res) => {
+//     db.Message.create(req.body, (err, savedMessage) => {
+//         if (err) console.log('Error in message#create:', err)
 
-        // Validations and error handling here
+//         // Validations and error handling here
 
-        res.status(201).json({ message: savedMessage })
-    })
-}
+//         res.status(201).json({ message: savedMessage })
+//     })
+// }
 
 // Message update route
 
