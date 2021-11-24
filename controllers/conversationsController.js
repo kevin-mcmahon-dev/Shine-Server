@@ -29,6 +29,7 @@ const conversationShow = (req, res) => {
 // This will find the conversation and find all messages that have that conversations id
 // Is it possible to do res1 and res2 in this way?
 // How else can you go about doing two queries within one API call?
+
 // const messageShow = (req, res1, res2) => {
 //     db.Conversation.findById(req.params.id, (err, foundConversation) => {
 //         if (err) console.log('Error in conversation show:', err)
@@ -49,6 +50,22 @@ const conversationShow = (req, res) => {
 //         res2.status(200).json({ messages: foundMessages});
 //     })
 // }
+
+// Message update route
+
+const messageUpdate = (req, res) => {
+    db.Message.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedMessage) => {
+        if (err) {
+            console.log('Error in message#update:', err)
+    
+            return res.send("Incomplete message#update controller function");
+        }
+
+        res.status(200).json({
+            updatedMessage
+        });
+    });
+}
 
 module.exports = {
     conversationIndex,
