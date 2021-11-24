@@ -53,17 +53,33 @@ const conversationShow = (req, res) => {
 
 // Message update route
 
-const messageUpdate = (req, res) => {
-    db.Message.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedMessage) => {
-        if (err) {
-            console.log('Error in message#update:', err)
+// const messageUpdate = (req, res) => {
+//     db.Message.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedMessage) => {
+//         if (err) {
+//             console.log('Error in message#update:', err)
     
-            return res.send("Incomplete message#update controller function");
-        }
+//             return res.send("Incomplete message#update controller function");
+//         }
 
-        res.status(200).json({
-            updatedMessage
-        });
+//         res.status(200).json({
+//             updatedMessage
+//         });
+//     });
+// }
+
+//Message delete route
+const deleteMessage = (req, res) => {
+    db.Message.findByIdAndDelete(req.params.id, (err, deletedMessage) => {
+        if (err) {
+            console.log('Error in messagve#destroy:', err) 
+            return res.send("Incomplete message#destroy controller function");
+        }
+    
+        res.status(200).json(
+            {
+                deletedMessage
+            }
+        );
     });
 }
 
