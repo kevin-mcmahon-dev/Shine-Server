@@ -15,6 +15,6 @@ mongoose.connect(connectionString)
 
 module.exports = {
     Conversation: require('./Conversation'),
-    Message: require('./Message'),
+    // Message: require('./Message'),
     User: require('./User'),
 };

@@ -1,3 +1,4 @@
+const express = require("express");
 const db = require('../models');
 
 // /conversations/:id
@@ -15,7 +16,7 @@ const db = require('../models');
 
 //         res1.status(200).json({ conversation: foundConversation});
 //     })
-//     db.Message.find({/*filter for all messages that have req.params.id*/}, (err, foundMessages) => {
+//     db.Message.find({conversation: {_id: req.params.id}}, (err, foundMessages) => {
 //         if (err) console.log('Error in message show:', err)
 
 //         if(!foundMessages) return res2.json({
@@ -25,6 +26,41 @@ const db = require('../models');
 //         res2.status(200).json({ messages: foundMessages});
 //     })
 // }
+
+const messageShow = async function (req, res) {
+    try {
+        const conversation = await db.Conversation.findById(req.params.id);
+        // const messages = await db.Message.find({conversation: req.params.id})
+        // const messages = await db.Message.find({conversation: {_id: req.params.id}})
+
+        // .populate("user");
+
+        // const user_ids = [];
+        // const user_log = [];
+        // console.log(messages);
+        // console.log("message array " + messages[1].user._id);
+        // console.log("I'm console logging messages array" + messages);
+        // for (let i = 0; i <= messages.length - 1; i++) {
+        //     user_ids[i] = messages[i].user._id;
+        //     console.log(`user_id array ${messages[i].user._id}`);
+        //     console.log(user_ids[i]);
+        //     user_log[i] = await db.Message.find({user: user_ids[i]}).populate("user");
+        //     console.log(`user_log array ${user_log[i]}`);
+        // }
+
+        // console.log("full user_id array: " + user_ids)
+        const context = {
+            conversation, 
+            // messages,
+            // user_log,
+        }
+
+        res.status(200).json({context});
+
+    } catch (error) {
+        return console.log(error);
+    }
+}
 
 // Message Create Route
 // const messageCreate = (req, res) => {
@@ -70,9 +106,9 @@ const db = require('../models');
 //     });
 // }
 
-// module.exports = {
-//     messageShow,
-//     messageCreate,
-//     messageUpdate,
-//     messageDelete,
-// };
+module.exports = {
+    messageShow,
+    // messageCreate,
+    // messageUpdate,
+    // messageDelete,
+};
