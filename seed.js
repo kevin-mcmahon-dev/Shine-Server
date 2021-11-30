@@ -9,9 +9,9 @@
 
 // Conversations
 
-// {   name: "Kevin and Kev", user: [{_id: "619c32494f20a6ed87e090bd"}, {_id: "619c32494f20a6ed87e090be"}]},
-// {   name: "Kevin, Kev, and Hannah", user: [{_id: "619c32494f20a6ed87e090bd"}, {_id: "619c32494f20a6ed87e090be"}, {_id: "619c32494f20a6ed87e090bf"}]},
-// { name: "Cody, James, Spotts, and Garrett", user: [{_id: "619c32494f20a6ed87e090c0"}, {_id: "619c32494f20a6ed87e090c1"}, {_id: "619c32494f20a6ed87e090c2"}, {_id: "619c32494f20a6ed87e090c3"}]}
+// {   name: "Kevin and Kev", user: [{_id: "619c32494f20a6ed87e090bd"}, {_id: "619c32494f20a6ed87e090be"}], messages: [{content: "This is Kevin", user: {_id: "61a53450a52967b48592eefe"}}, {content: "This is Kev", user: {_id: "61a53450a52967b48592eeff"}}]},
+// {   name: "Kevin, Kev, and Hannah", user: [{_id: "619c32494f20a6ed87e090bd"}, {_id: "619c32494f20a6ed87e090be"}, {_id: "619c32494f20a6ed87e090bf"}], messages: [{content: "Kevin's message", user: {_id: "61a53450a52967b48592eefe"}}, {content: "Kev's message", user: {_id: "61a53450a52967b48592eeff"}}, {content: "Hannah's message", user: {_id: "61a53450a52967b48592ef00"}}]},
+// {   name: "Cody, James, Spotts, and Garrett", user: [{_id: "619c32494f20a6ed87e090c0"}, {_id: "619c32494f20a6ed87e090c1"}, {_id: "619c32494f20a6ed87e090c2"}, {_id: "619c32494f20a6ed87e090c3"}],  messages: [{content: "Cody's message", user: {_id: "61a53450a52967b48592ef01"}}, {content: "James's message", user: {_id: "61a53450a52967b48592ef02"}}, {content: "Spotts's message", user: {_id: "61a53450a52967b48592ef03"}}, {content: "Garrett's message", user: {_id: "61a53450a52967b48592ef04"}}]}
 
 // name: {
 //     type: String,

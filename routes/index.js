@@ -1,3 +1,4 @@
 module.exports = {
-    routes: require('./shineRoutes'),
+    userRoutes: require('./userRoutes'),
+    conversationRoutes: require('./conversationRoutes')
 };
