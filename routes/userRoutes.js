@@ -5,7 +5,7 @@ const ctrl = require('../controllers');
 const authRequired = require("../middleware/authRequired");
 
 // routes
-// router.get('/accounts', ctrl.users.accountIndex);
+router.get('/accounts', ctrl.users.accountIndex);
 // router.get('/accounts/:id', ctrl.users.accountShow);
 // router.post('/accounts', ctrl.users.accountCreate);
 router.put('/accounts/:id', ctrl.users.accountUpdate);

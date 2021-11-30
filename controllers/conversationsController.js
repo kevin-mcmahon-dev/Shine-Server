@@ -16,6 +16,7 @@ const conversationIndex = (req, res) => {
 const conversationShow = async function (req, res) {
     try {
         const conversation = await db.Conversation.findById(req.params.id).populate("user");
+        // const conversation = await db.Conversation.findById(req.params.id).populate("messages.user");
 
         res.status(200).json({conversation});
 
