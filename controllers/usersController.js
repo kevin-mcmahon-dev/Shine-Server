@@ -6,12 +6,12 @@ const jwt = require("jsonwebtoken");
 
 const register = async (req, res) => {
     try {
-        const foundUser = await db.User.findOne({ username: req.body.username });
+        const foundUser = await db.User.findOne({ email: req.body.email });
         
         if (foundUser)
             return res.status(400).json({
                 status: 400,
-                message: "Username has already been registered. Please try again",
+                message: "Email has already been registered. Please try again",
             });
 
         const salt = await bcrypt.genSalt(10);
@@ -31,14 +31,14 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        const foundUser = await db.User.findOne({ username: req.body.username }).select(
+        const foundUser = await db.User.findOne({ email: req.body.email }).select(
             "+password"
         );
         
         if (!foundUser) {
             return res
             .status(400)
-            .json({ status: 400, message: "Username or password is incorrect" });
+            .json({ status: 400, message: "Email or password is incorrect" });
         }
         
         const isMatch = await bcrypt.compare(req.body.password, foundUser.password);
@@ -75,7 +75,7 @@ const login = async (req, res) => {
 
 const profile = async (req, res) => {
     try {
-        const foundUser = await db.User.findById(req.currentUser);
+        const foundUser = await db.User.findById(req.currentUser).populate("conversation");
         
         res.json({ headers: req.headers, user: foundUser });
     } catch (error) {
@@ -84,6 +84,21 @@ const profile = async (req, res) => {
             message: "Something went wrong. Please try again",
         });
     }
+};
+
+// Update Page
+const accountUpdate = (req, res) => {
+    db.User.findByIdAndUpdate(req.currentUser, req.body, {new: true}, (err, updatedUser) => {
+        if (err) {
+            console.log('Error in user#update:', err)
+    
+            return res.send("Incomplete user#update controller function");
+        }
+
+        res.status(200).json({
+            updatedUser
+        });
+    });
 };
 
 // Account Index will be used for search functionality
@@ -111,20 +126,6 @@ const accountShow = (req, res) => {
     });   
 };
 
-// Update Page
-const accountUpdate = (req, res) => {
-    db.User.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedUser) => {
-        if (err) {
-            console.log('Error in user#update:', err)
-    
-            return res.send("Incomplete user#update controller function");
-        }
-
-        res.status(200).json({
-            updatedUser
-        });
-    });
-};
 
 // Create Account
 const accountCreate = (req, res) => {
