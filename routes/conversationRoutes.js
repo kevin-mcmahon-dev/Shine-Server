@@ -2,12 +2,14 @@
 const router = require('express').Router();
 const ctrl = require('../controllers');
 
+const authRequired = require("../middleware/authRequired");
+
 // routes
 router.get('/', ctrl.conversations.conversationIndex);
 router.post('/', ctrl.conversations.conversationCreate);
-// router.get('/conversations/:id/edit', ctrl.conversations.conversationEditPage);
+// router.put('/:id', ctrl.conversations.conversationEdit);
 router.get('/:id', ctrl.conversations.conversationShow);
-router.put('/:id', ctrl.conversations.conversationEdit);
+router.put('/:id', authRequired, ctrl.conversations.messageCreate);
 router.delete('/:id', ctrl.conversations.conversationDelete);
 
 // exports

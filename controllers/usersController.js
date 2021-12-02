@@ -50,7 +50,7 @@ const login = async (req, res) => {
                 { _id: foundUser._id },
                 "supersecretwaffels",
                 {
-                expiresIn: "1h",
+                expiresIn: "8h",
                 }
             );
             res.status(200).json({
@@ -76,7 +76,6 @@ const login = async (req, res) => {
 const profile = async (req, res) => {
     try {
         const foundUser = await db.User.findById(req.currentUser).populate("conversation");
-        
         res.json({ headers: req.headers, user: foundUser });
     } catch (error) {
         return res.status(500).json({

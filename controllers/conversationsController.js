@@ -1,5 +1,7 @@
 const { Conversation } = require('../models');
 const db = require('../models');
+// const bcrypt = require("bcryptjs");
+// const jwt = require("jsonwebtoken");
 
 const conversationIndex = (req, res) => {
     db.Conversation.find({}, (err, foundConversations) => {
@@ -15,7 +17,7 @@ const conversationIndex = (req, res) => {
 
 const conversationShow = async function (req, res) {
     try {
-        const conversation = await db.Conversation.findById(req.params.id).populate("user");
+        const conversation = await db.Conversation.findById(req.params.id).populate("user").populate("messages.user");
         // const conversation = await db.Conversation.findById(req.params.id).populate("messages.user");
 
         res.status(200).json({conversation});
@@ -25,6 +27,7 @@ const conversationShow = async function (req, res) {
     }
 }
 
+// Original version that overrides previous values
 const conversationEdit = async (req, res) => {
     try {
 
@@ -41,6 +44,37 @@ const conversationEdit = async (req, res) => {
     }
 }
 
+const messageCreate = async (req, res) => {
+    try {
+
+        const updatedConversation = await Conversation.findById(req.params.id)
+    
+        const message = {
+            content: req.body.content,
+            user: req.currentUser,
+        }
+        console.log(message.content)
+        console.log(message.user)
+        console.log(req.currentUser)
+        updatedConversation.messages.push(message);
+        
+        await updatedConversation.save()
+
+        res.status(200).json({updatedConversation});
+
+    } catch (err) {
+        return console.log(err);
+    }
+}
+
+// Message Create
+// const messageCreate = async (req, res) => {
+//     try {
+
+//     } catch (err) {
+//         return console.log(err);
+//     }
+// }
 // const conversationEditPage = async (req, res) => {
 //     try {
 //         const foundConversation = await Conversation.findById(req.params.id).populate("user");
@@ -84,8 +118,8 @@ const conversationDelete = (req, res) => {
 module.exports = {
     conversationIndex,
     conversationShow,
-    conversationEdit,
+    messageCreate,
     conversationCreate,
-    // conversationEditPage,
+    conversationEdit,
     conversationDelete,
 };
