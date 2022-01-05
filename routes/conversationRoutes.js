@@ -9,7 +9,7 @@ router.get('/', ctrl.conversations.conversationIndex);
 router.post('/', ctrl.conversations.conversationCreate);
 // router.put('/:id', ctrl.conversations.conversationEdit);
 router.get('/:id', ctrl.conversations.conversationShow);
-router.put('/:id', ctrl.conversations.messageCreate);
+router.put('/:id', authRequired, ctrl.conversations.messageCreate);
 router.delete('/:id', ctrl.conversations.conversationDelete);
 
 // exports
