@@ -51,10 +51,11 @@ const messageCreate = async (req, res) => {
     
         const message = {
             content: req.body.content,
+            user: req.currentUser
         }
         console.log(message.content)
         console.log(message.user)
-        // console.log(req.currentUser)
+        console.log(req.currentUser)
         updatedConversation.messages.push(message);
         
         await updatedConversation.save()
