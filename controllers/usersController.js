@@ -76,7 +76,8 @@ const login = async (req, res) => {
 const profile = async (req, res) => {
     try {
         const foundUser = await db.User.findById(req.currentUser).populate("conversation");
-        res.json({ headers: req.headers, user: foundUser });
+        /* Added this to get all users to list */ const allUsers = await db.User.find({});
+        res.json({ headers: req.headers, user: foundUser, /* Added following section */users: allUsers });
     } catch (error) {
         return res.status(500).json({
             status: 500,
@@ -113,36 +114,35 @@ const accountIndex = (req, res) => {
     })
 }
 
-const accountShow = (req, res) => {
-    db.User.findById(req.params.id, (err, foundUser) => {
-        if (err) {
-            console.log('Error in user#index:', err)
+// Two functions below are unnecessary with profile and register functions
+// const accountShow = (req, res) => {
+//     db.User.findById(req.params.id, (err, foundUser) => {
+//         if (err) {
+//             console.log('Error in user#index:', err)
 
-            return res.send("Incomplete user controller function");
-        }
+//             return res.send("Incomplete user controller function");
+//         }
 
-        res.status(200).json({ user: foundUser });
-    });   
-};
+//         res.status(200).json({ user: foundUser });
+//     });   
+// };
 
 
-// Create Account
-const accountCreate = (req, res) => {
-    db.User.create(req.body, (err, savedUser) => {
-        if (err) console.log('Error in user#create:', err)
+// // Create Account
+// const accountCreate = (req, res) => {
+//     db.User.create(req.body, (err, savedUser) => {
+//         if (err) console.log('Error in user#create:', err)
 
-        // Validations and error handling here
+//         // Validations and error handling here
 
-        res.status(201).json({ user: savedUser })
-    })
-}
+//         res.status(201).json({ user: savedUser })
+//     })
+// }
 
 module.exports = {
     register,
     login,
     profile,
     accountIndex,
-    accountShow,
     accountUpdate,
-    accountCreate,
 };
