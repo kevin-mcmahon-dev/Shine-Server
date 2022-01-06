@@ -87,19 +87,32 @@ const profile = async (req, res) => {
 };
 
 // Update Page
-const accountUpdate = (req, res) => {
-    db.User.findByIdAndUpdate(req.currentUser, req.body, {new: true}, (err, updatedUser) => {
-        if (err) {
-            console.log('Error in user#update:', err)
-    
-            return res.send("Incomplete user#update controller function");
-        }
+const accountUpdate = async (req, res) => {
+    try {
+        const updatedUser = await db.User.findById(req.currentUser);
+        updatedUser.conversation.push(req.body.content);
+        await updatedUser.save();
 
-        res.status(200).json({
-            updatedUser
-        });
-    });
+        res.status(200).json({updatedUser});
+
+    } catch (err) {
+        return console.log(err);
+    }
 };
+
+//Old accountUpdate function
+
+// db.User.findByIdAndUpdate(req.currentUser, req.body, {new: true}, (err, updatedUser) => {
+//     if (err) {
+//         console.log('Error in user#update:', err)
+
+//         return res.send("Incomplete user#update controller function");
+//     }
+
+//     res.status(200).json({
+//         updatedUser
+//     });
+// });
 
 // Account Index will be used for search functionality
 const accountIndex = (req, res) => {

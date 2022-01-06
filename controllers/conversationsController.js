@@ -67,29 +67,18 @@ const messageCreate = async (req, res) => {
     }
 }
 
-// Message Create
-// const messageCreate = async (req, res) => {
-//     try {
-
-//     } catch (err) {
-//         return console.log(err);
-//     }
-// }
-// const conversationEditPage = async (req, res) => {
-//     try {
-//         const foundConversation = await Conversation.findById(req.params.id).populate("user");
-//         console.log(foundConversation);
-//         console.log(foundConversation.messages[0]._id)
-//         res.status(200).json(foundConversation);
-//     } catch (err) {
-//         return console.log(err);
-//     }
-// }
-
 //Conversation Create
 
 const conversationCreate = (req, res) => {
     db.Conversation.create(req.body, (err, savedConversation) => {
+        // Something like below will need to be supplied to req.body on frontend
+        // "content" will be selected user(s)
+        // "user" will be currently logged in user
+        
+        // const message = {
+        //     content: req.body.content,
+        //     user: req.currentUser
+        // }
         if (err) console.log('Error in conversation#create:', err)
 
         // Validations and error handling here
