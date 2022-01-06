@@ -12,6 +12,7 @@ const conversationIndex = (req, res) => {
         })
 
         res.status(200).json({ conversations: foundConversations});
+        console.log(foundConversations[foundConversations.length - 1]._id)
     })
 }
 
@@ -71,19 +72,11 @@ const messageCreate = async (req, res) => {
 
 const conversationCreate = (req, res) => {
     db.Conversation.create(req.body, (err, savedConversation) => {
-        // Something like below will need to be supplied to req.body on frontend
-        // "content" will be selected user(s)
-        // "user" will be currently logged in user
-        
-        // const message = {
-        //     content: req.body.content,
-        //     user: req.currentUser
-        // }
+
         if (err) console.log('Error in conversation#create:', err)
 
-        // Validations and error handling here
-
         res.status(201).json({ conversation: savedConversation })
+        // console.log(res._id)
     })
 }
 

@@ -89,16 +89,49 @@ const profile = async (req, res) => {
 // Update Page
 const accountUpdate = async (req, res) => {
     try {
-        const updatedUser = await db.User.findById(req.currentUser);
-        updatedUser.conversation.push(req.body.content);
-        await updatedUser.save();
+        const conversations = await db.Conversation.find({});
+        const newConvoId = conversations[conversations.length - 1]._id
 
-        res.status(200).json({updatedUser});
+        const newConvo = await db.Conversation.findById(newConvoId);
+
+        const firstUserId = newConvo.user[0];
+        const otherUserId = newConvo.user[1];
+
+        const updatedUser = await db.User.findById(firstUserId);
+        const otherUser = await db.User.findById(otherUserId);
+
+        updatedUser.conversation.push(newConvoId);
+        otherUser.conversation.push(newConvoId);
+
+        await updatedUser.save();
+        await otherUser.save();
+        // const updatedUser = await db.User.findById(req.currentUser);
+        // updatedUser.conversation.push(req.body.content);
+        // await updatedUser.save();
+
+        res.status(200).json({updatedUser, otherUser});
 
     } catch (err) {
         return console.log(err);
     }
 };
+// another accountUpdate function 
+// const conversations = await db.Conversation.find({});
+// const newConvoId = conversations[conversations.length - 1]._id
+
+// const newConvo = await db.Conversation.findById(newConvoId);
+
+// const firstUserId = newConvo.user[0];
+// const otherUserId = newConvo.user[1];
+
+// const updatedUser = await db.User.findById(firstUserId);
+// const otherUser = await db.User.findById(otherUserId);
+
+// updatedUser.conversation.push(newConvoId);
+// otherUser.conversation.push(newConvoId);
+
+// await updatedUser.save();
+// await otherUser.save();
 
 //Old accountUpdate function
 
