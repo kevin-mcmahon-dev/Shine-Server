@@ -13,6 +13,7 @@ router.put('/profile', authRequired, ctrl.users.accountUpdate);
 router.post('/register', ctrl.users.register);
 router.post('/login', ctrl.users.login);
 router.get('/profile', authRequired, ctrl.users.profile);
+router.post('/profile', authRequired, ctrl.conversations.conversationCreate);
 
 // exports
 module.exports = router;
