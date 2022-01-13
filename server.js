@@ -9,6 +9,7 @@ const routes = require('./routes');
 
 // TODO: middleware - CORS
 app.use(cors());
+app.options('*', cors());
 
 // middleware - JSON parsing
 app.use(express.json());

@@ -76,7 +76,8 @@ const login = async (req, res) => {
 const profile = async (req, res) => {
     try {
         const foundUser = await db.User.findById(req.currentUser).populate("conversation");
-        res.json({ headers: req.headers, user: foundUser });
+        /* Added this to get all users to list */ const allUsers = await db.User.find({});
+        res.json({ headers: req.headers, user: foundUser, /* Added following section */users: allUsers });
     } catch (error) {
         return res.status(500).json({
             status: 500,
@@ -86,19 +87,65 @@ const profile = async (req, res) => {
 };
 
 // Update Page
-const accountUpdate = (req, res) => {
-    db.User.findByIdAndUpdate(req.currentUser, req.body, {new: true}, (err, updatedUser) => {
-        if (err) {
-            console.log('Error in user#update:', err)
-    
-            return res.send("Incomplete user#update controller function");
-        }
+const accountUpdate = async (req, res) => {
+    try {
+        const conversations = await db.Conversation.find({});
+        const newConvoId = conversations[conversations.length - 1]._id
 
-        res.status(200).json({
-            updatedUser
-        });
-    });
+        const newConvo = await db.Conversation.findById(newConvoId);
+
+        const firstUserId = newConvo.user[0];
+        const otherUserId = newConvo.user[1];
+
+        const updatedUser = await db.User.findById(firstUserId);
+        const otherUser = await db.User.findById(otherUserId);
+
+        updatedUser.conversation.push(newConvoId);
+        otherUser.conversation.push(newConvoId);
+
+        await updatedUser.save();
+        await otherUser.save();
+        // const updatedUser = await db.User.findById(req.currentUser);
+        // updatedUser.conversation.push(req.body.content);
+        // await updatedUser.save();
+
+        res.status(200).json({updatedUser, otherUser});
+
+    } catch (err) {
+        return console.log(err);
+    }
 };
+// another accountUpdate function 
+// const conversations = await db.Conversation.find({});
+// const newConvoId = conversations[conversations.length - 1]._id
+
+// const newConvo = await db.Conversation.findById(newConvoId);
+
+// const firstUserId = newConvo.user[0];
+// const otherUserId = newConvo.user[1];
+
+// const updatedUser = await db.User.findById(firstUserId);
+// const otherUser = await db.User.findById(otherUserId);
+
+// updatedUser.conversation.push(newConvoId);
+// otherUser.conversation.push(newConvoId);
+
+// await updatedUser.save();
+// await otherUser.save();
+
+//Old accountUpdate function
+
+// db.User.findByIdAndUpdate(req.currentUser, req.body, {new: true}, (err, updatedUser) => {
+//     if (err) {
+//         console.log('Error in user#update:', err)
+
+//         return res.send("Incomplete user#update controller function");
+//     }
+
+//     res.status(200).json({
+//         updatedUser
+//     });
+// });
 
 // Account Index will be used for search functionality
 const accountIndex = (req, res) => {
@@ -113,36 +160,35 @@ const accountIndex = (req, res) => {
     })
 }
 
-const accountShow = (req, res) => {
-    db.User.findById(req.params.id, (err, foundUser) => {
-        if (err) {
-            console.log('Error in user#index:', err)
+// Two functions below are unnecessary with profile and register functions
+// const accountShow = (req, res) => {
+//     db.User.findById(req.params.id, (err, foundUser) => {
+//         if (err) {
+//             console.log('Error in user#index:', err)
 
-            return res.send("Incomplete user controller function");
-        }
+//             return res.send("Incomplete user controller function");
+//         }
 
-        res.status(200).json({ user: foundUser });
-    });   
-};
+//         res.status(200).json({ user: foundUser });
+//     });   
+// };
 
 
-// Create Account
-const accountCreate = (req, res) => {
-    db.User.create(req.body, (err, savedUser) => {
-        if (err) console.log('Error in user#create:', err)
+// // Create Account
+// const accountCreate = (req, res) => {
+//     db.User.create(req.body, (err, savedUser) => {
+//         if (err) console.log('Error in user#create:', err)
 
-        // Validations and error handling here
+//         // Validations and error handling here
 
-        res.status(201).json({ user: savedUser })
-    })
-}
+//         res.status(201).json({ user: savedUser })
+//     })
+// }
 
 module.exports = {
     register,
     login,
     profile,
     accountIndex,
-    accountShow,
     accountUpdate,
-    accountCreate,
 };
