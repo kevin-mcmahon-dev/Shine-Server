@@ -14,6 +14,7 @@ router.post('/register', ctrl.users.register);
 router.post('/login', ctrl.users.login);
 router.get('/profile', authRequired, ctrl.users.profile);
 router.post('/profile', authRequired, ctrl.conversations.conversationCreate);
+router.get('/profiles', ctrl.users.accountIndex);
 
 // exports
 module.exports = router;
