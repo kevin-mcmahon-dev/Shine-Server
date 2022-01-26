@@ -149,7 +149,7 @@ const accountUpdate = async (req, res) => {
 
 // Account Index will be used for search functionality
 const accountIndex = (req, res) => {
-    db.User.find({username: {'$regex': req.body.username}}, (err, foundUsers) => {
+    db.User.find({username: {'$regex': `${req.body.username}`}}, (err, foundUsers) => {
         if (err) console.log('Error in user index:', err)
 
         if(!foundUsers) return res.json({
