@@ -1,5 +1,6 @@
 const port = process.env.PORT || 4000;
 const express = require('express');
+require("dotenv").config({ path: "./config.env"})
 // const session = require("express-session");
 // const MongoStore = require("connect-mongo");
 
