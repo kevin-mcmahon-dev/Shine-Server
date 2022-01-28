@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const connectionString = process.env.MONGODB_URI || 'mongodb://localhost:27017/shineserver';
+const connectionString = process.env.ATLAS_URI || 'mongodb://localhost:27017/shineServerDatabase';
 
 // const configOptions = {
 //     useNewUrlParser: true,
