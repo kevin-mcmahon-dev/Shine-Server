@@ -24,6 +24,6 @@ app.use((req, res, next) => {
 app.use('/api/v1/conversations', routes.conversationRoutes);
 app.use('/api/v1/', routes.userRoutes);
 
-// app.get("/", (req, res) => { res.send("hello from heroku")})
+app.get("/", (req, res) => { res.send("hello from heroku")})
 // listen
 app.listen(port, () => console.log(`Server is running on port ${port}`));
