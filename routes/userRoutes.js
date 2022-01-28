@@ -9,6 +9,7 @@ const authRequired = require("../middleware/authRequired");
 // router.get('/accounts/:id', ctrl.users.accountShow);
 // router.post('/accounts', ctrl.users.accountCreate);
 // router.get('/profile', authRequired, ctrl.users.accountIndex);
+router.post('/profiles', ctrl.users.accountIndex);
 router.put('/profile', authRequired, ctrl.users.accountUpdate);
 router.post('/register', ctrl.users.register);
 router.post('/login', ctrl.users.login);

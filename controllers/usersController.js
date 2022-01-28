@@ -75,7 +75,7 @@ const login = async (req, res) => {
 
 const profile = async (req, res) => {
     try {
-        const foundUser = await db.User.findById(req.currentUser).populate("conversation");
+        const foundUser = await db.User.findById(req.currentUser).populate("conversation").populate("conversation.user.name")
         /* Added this to get all users to list */ const allUsers = await db.User.find({});
         res.json({ headers: req.headers, user: foundUser, /* Added following section */users: allUsers });
     } catch (error) {
@@ -149,7 +149,7 @@ const accountUpdate = async (req, res) => {
 
 // Account Index will be used for search functionality
 const accountIndex = (req, res) => {
-    db.User.find({}, (err, foundUsers) => {
+    db.User.find({username: {'$regex': `${req.body.username}`}}, (err, foundUsers) => {
         if (err) console.log('Error in user index:', err)
 
         if(!foundUsers) return res.json({
