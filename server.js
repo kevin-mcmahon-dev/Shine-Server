@@ -21,8 +21,8 @@ app.use((req, res, next) => {
 });
 
 // middleware - API routes
-app.use('/api/v1/conversations', routes.conversationRoutes);
-app.use('/api/v1/', routes.userRoutes);
+app.use('http://shineserver.herokuapp.com/api/v1/conversations', routes.conversationRoutes);
+app.use('http://shineserver.herokuapp.com/api/v1/', routes.userRoutes);
 
 // app.get("/", (req, res) => { res.send("hello from heroku")})
 // listen
