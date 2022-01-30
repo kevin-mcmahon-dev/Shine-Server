@@ -18,13 +18,28 @@ const register = async (req, res) => {
         const hash = await bcrypt.hash(req.body.password, salt);
         const createdUser = await db.User.create({ ...req.body, password: hash });
         
-        return res
-        .status(201)
-        .json({ status: 201, message: "success", createdUser });
+        if (createdUser) {
+            const signedJwt = await jwt.sign(
+                { _id: createdUser._id },
+                "supersecretwaffels",
+                {
+                expiresIn: "8h",
+                }
+            );
+            res.status(200).json({
+                status: 200,
+                message: "Success",
+                token: signedJwt,
+            });
+        }
+        
+        // return res
+        // .status(201)
+        // .json({ status: 201, message: "success", createdUser });
     } catch (error) {
         return res.status(500).json({
             status: 500,
-            message: "Something went wrong. Please try again",
+            message: error || "Something went wrong. Please try again",
         });
     }
 };
